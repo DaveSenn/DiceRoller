@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.IO;
 using Newtonsoft.Json;
+
+#endregion
 
 namespace DiceRoller
 {
@@ -57,10 +61,14 @@ namespace DiceRoller
             return configuration;
         }
 
+        #endregion
+
+        #region Public Members
+
         /// <summary>
         ///     Saves the current configuration.
         /// </summary>
-        private static void SaveConfiguration()
+        public static void SaveConfiguration()
         {
             try
             {

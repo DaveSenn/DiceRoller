@@ -1,9 +1,7 @@
 ﻿#region Usings
 
 using System;
-using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
 using PortableExtensions;
 
 #endregion
@@ -30,7 +28,6 @@ namespace DiceRoller
             {
                 Console.Write( "Parsing failed:" );
                 Console.WriteLine( ex );
-                throw;
             }
         }
     }
@@ -65,149 +62,46 @@ namespace DiceRoller
         /// <param name="args">The start arguments, without the configuration switch.</param>
         private void ParsConfiguration( String[] args )
         {
-        }
-    }
-
-    /// <summary>
-    ///     Class containing all constant values.
-    /// </summary>
-    public static class Consts
-    {
-        #region Paths
-
-        public static readonly String ConfigurationFilePath = "DiceRollerConfiguration.json";
-
-        #endregion
-
-        /// <summary>
-        ///     Switch for accessing the configuration.
-        /// </summary>
-        public const String ConfigurationSwitch = "config";
-
-        #region Constructor
-
-        /// <summary>
-        ///     Initialize the <see cref="Consts" /> class.
-        /// </summary>
-        static Consts()
-        {
-            //Get path to configuration file
-            ConfigurationFilePath = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ),
-                                                  ConfigurationFilePath );
-        }
-
-        #endregion
-    }
-
-    /// <summary>
-    ///     Class representing the configuration of the DiceRoller application.
-    /// </summary>
-    public class DiceRollerConfiguration
-    {
-        #region Properties
-
-        /// <summary>
-        ///     Gets or sets the result color.
-        /// </summary>
-        /// <value>The result color.</value>
-        public ConsoleColor ResultColor { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the error color.
-        /// </summary>
-        /// <value>The error color.</value>
-        public ConsoleColor ErrorColor { get; set; }
-
-        #endregion
-
-        #region Public Members
-
-        /// <summary>
-        ///     Restores the default settings.
-        /// </summary>
-        public void RestoreDefault()
-        {
-            ResultColor = ConsoleColor.Green;
-            ErrorColor = ConsoleColor.Red;
-        }
-
-        #endregion
-    }
-
-    /// <summary>
-    ///     Class managing the application configuration.
-    /// </summary>
-    public static class DiceRollerConfigurationManager
-    {
-        #region Fields
-
-        /// <summary>
-        ///     The configuration.
-        /// </summary>
-        private static DiceRollerConfiguration _configuration;
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///     Gets the configuration of the DiceRoller application.
-        /// </summary>
-        public static DiceRollerConfiguration Configuration
-        {
-            get { return _configuration ?? ( _configuration = LoadConfiguration() ); }
-        }
-
-        #endregion
-
-        #region Private Members
-
-        /// <summary>
-        ///     Loads the configuration.
-        /// </summary>
-        /// <returns>Returns the configuration.</returns>
-        private static DiceRollerConfiguration LoadConfiguration()
-        {
-            if ( File.Exists( Consts.ConfigurationFilePath ) )
+            //Find action to perform
+            switch ( args[0] )
             {
-                try
-                {
-                    return
-                        JsonConvert.DeserializeObject<DiceRollerConfiguration>( File.ReadAllText( Consts.ConfigurationFilePath ) );
-                }
-                catch ( Exception ex )
-                {
-                    Console.Error.WriteLine( "Failed to read configuration:" );
-                    Console.Error.WriteLine( ex );
-                }
+                case Consts.Print:
+                    //Print the current configuration
+                    Console.WriteLine( "Configuration: {0}{1}", Environment.NewLine, DiceRollerConfigurationManager.Configuration );
+                    return;
+                case Consts.Path:
+                    //Print location of configuration file
+                    Console.WriteLine( Consts.ConfigurationFilePath );
+                    return;
+                case Consts.Reset:
+                    //Reset the settings
+                    DiceRollerConfigurationManager.Configuration.RestoreDefault();
+                    DiceRollerConfigurationManager.SaveConfiguration();
+                    Console.WriteLine( "Configuration reseted" );
+                    return;
             }
 
-            var configuration = new DiceRollerConfiguration();
-            configuration.RestoreDefault();
-            return configuration;
-        }
-
-        /// <summary>
-        ///     Saves the current configuration.
-        /// </summary>
-        private static void SaveConfiguration()
-        {
+            //Check for get value
             try
             {
-                //Check if configuration can have changed.
-                if ( _configuration == null && File.Exists( Consts.ConfigurationFilePath ) )
-                    return;
-
-                var json = JsonConvert.SerializeObject( Configuration );
-                File.WriteAllText( Consts.ConfigurationFilePath, json );
+                switch ( args.Length )
+                {
+                    case 1:
+                        Console.WriteLine( DiceRollerConfigurationManager.Configuration.GetProperty( args[0] ) );
+                        break;
+                    case 2:
+                        DiceRollerConfigurationManager.Configuration.SetProperty( args[0], args[1] );
+                        DiceRollerConfigurationManager.SaveConfiguration();
+                        break;
+                }
+                return;
             }
-            catch ( Exception ex )
+            catch
             {
-                Console.Error.WriteLine( "Failed to save configuration:" );
-                Console.Error.WriteLine( ex );
+                Console.Error.WriteLine( "Invalid configuration property." );
+                return;
             }
+            Console.Error.WriteLine( "Invalid configuration arguments." );
         }
-
-        #endregion
     }
 }

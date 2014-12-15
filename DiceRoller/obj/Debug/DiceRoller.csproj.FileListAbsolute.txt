@@ -5,6 +5,5 @@ C:\_Projects\_Git\DiceRoller\DiceRoller\bin\Debug\Newtonsoft.Json.dll
 C:\_Projects\_Git\DiceRoller\DiceRoller\bin\Debug\PortableExtensions.dll
 C:\_Projects\_Git\DiceRoller\DiceRoller\bin\Debug\Newtonsoft.Json.xml
 C:\_Projects\_Git\DiceRoller\DiceRoller\bin\Debug\PortableExtensions.xml
-C:\_Projects\_Git\DiceRoller\DiceRoller\obj\Debug\DiceRoller.csprojResolveAssemblyReference.cache
 C:\_Projects\_Git\DiceRoller\DiceRoller\obj\Debug\dr.exe
 C:\_Projects\_Git\DiceRoller\DiceRoller\obj\Debug\dr.pdb

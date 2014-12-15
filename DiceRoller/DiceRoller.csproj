@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\DiceRollerConfiguration.cs" />
+    <Compile Include="Configuration\DiceRollerConfigurationManager.cs" />
+    <Compile Include="Consts.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
