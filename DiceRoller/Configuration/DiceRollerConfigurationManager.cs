@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using Newtonsoft.Json;
+using PortableExtensions;
 
 #endregion
 
@@ -51,8 +52,7 @@ namespace DiceRoller
                 }
                 catch ( Exception ex )
                 {
-                    Console.Error.WriteLine( "Failed to read configuration:" );
-                    Console.Error.WriteLine( ex );
+                    OutputHelper.PrintError( "Failed to read configuration:{0}{1}".F( Environment.NewLine, ex ) );
                 }
             }
 
@@ -81,8 +81,7 @@ namespace DiceRoller
             }
             catch ( Exception ex )
             {
-                Console.Error.WriteLine( "Failed to save configuration:" );
-                Console.Error.WriteLine( ex );
+                OutputHelper.PrintError( "Failed to save configuration:{0}{1}".F( Environment.NewLine, ex ) );
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿#region Usings
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -31,6 +32,12 @@ namespace DiceRoller
         [JsonConverter( typeof (StringEnumConverter) )]
         public ConsoleColor ErrorColor { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the defined profiles.
+        /// </summary>
+        /// <value>The profiles.</value>
+        public Dictionary<String, String> Profiles { get; set; }
+
         #endregion
 
         #region Public Methods
@@ -42,6 +49,7 @@ namespace DiceRoller
         {
             ResultColor = ConsoleColor.Green;
             ErrorColor = ConsoleColor.Red;
+            Profiles = new Dictionary<String, String>();
         }
 
         /// <summary>
@@ -53,7 +61,7 @@ namespace DiceRoller
         public String GetProperty( String propertyName )
         {
             var property = GetType()
-                .GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                .GetProperty( propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance );
 
             if ( property == null )
                 throw new ArgumentException( "Configuration property does not exist.", propertyName.GetName( () => propertyName ) );
@@ -67,7 +75,7 @@ namespace DiceRoller
         /// </summary>
         /// <param name="propertyName">The name of the property.</param>
         /// <param name="value">The new value.</param>
-        public void SetProperty(String propertyName, String value)
+        public void SetProperty( String propertyName, String value )
         {
             if ( propertyName.CompareOrdinalIgnoreCase( this.GetName( () => ErrorColor ) ) )
             {
@@ -77,7 +85,7 @@ namespace DiceRoller
                     ErrorColor = color;
                     return;
                 }
-                Console.Error.WriteLine( "Invalid value for type: {0}", typeof (ConsoleColor).Name );
+                OutputHelper.PrintError( "Invalid value for type: {0}".F( typeof (ConsoleColor).Name ) );
             }
             else if ( propertyName.CompareOrdinalIgnoreCase( this.GetName( () => ResultColor ) ) )
             {
@@ -87,10 +95,67 @@ namespace DiceRoller
                     ResultColor = color;
                     return;
                 }
-                Console.Error.WriteLine( "Invalid value for type: {0}", typeof (ConsoleColor).Name );
+                OutputHelper.PrintError( "Invalid value for type: {0}".F( typeof (ConsoleColor).Name ) );
             }
-            
-            throw new ArgumentException("Property does not exist.", propertyName.GetName(() => propertyName));
+
+            throw new ArgumentException( "Property does not exist.", propertyName.GetName( () => propertyName ) );
+        }
+
+        /// <summary>
+        ///     Gets the profile with the given name.
+        /// </summary>
+        /// <exception cref="IndexOutOfRangeException">Profile does not exist.</exception>
+        /// <param name="profileName">The name of the profile.</param>
+        /// <returns>Returns the profile with the given name.</returns>
+        public String GetProfile( String profileName )
+        {
+            if ( Profiles.ContainsKey( profileName ) )
+                return Profiles[profileName];
+
+            throw new IndexOutOfRangeException( "Profile '{0}' does not exist.".F( profileName ) );
+        }
+
+        /// <summary>
+        ///     Removes the profile with the given name.
+        /// </summary>
+        /// <exception cref="IndexOutOfRangeException">Profile does not exist.</exception>
+        /// <param name="profileName">The name of the profile.</param>
+        public void RemoveProfile( String profileName )
+        {
+            if ( Profiles.ContainsKey( profileName ) )
+                Profiles.Remove( profileName );
+
+            throw new IndexOutOfRangeException( "Profile '{0}' does not exist.".F( profileName ) );
+        }
+
+        /// <summary>
+        ///     Adds the given profile.
+        /// </summary>
+        /// <exception cref="ArgumentException">Profile with same name already exists.</exception>
+        /// <param name="profileName">The name of the profile.</param>
+        /// <param name="profile">The profile to add.</param>
+        public void AddProfile( String profileName, String profile )
+        {
+            if ( Profiles.ContainsKey( profileName ) )
+                throw new ArgumentException( "Profile with same name already exists.", profileName.GetName( () => profile ) );
+
+            //TODO: CHECK if profile is valid.
+            Profiles.Add( profileName, profile );
+        }
+
+        /// <summary>
+        ///     Edits the profile with the given name.
+        /// </summary>
+        /// <exception cref="IndexOutOfRangeException">Profile does not exist.</exception>
+        /// <param name="profileName">The name of the profile.</param>
+        /// <param name="profile">The new profile value.</param>
+        public void EditProfile(String profileName, String profile)
+        {
+            if (!Profiles.ContainsKey(profileName))
+                throw new IndexOutOfRangeException("Profile does not exist.");
+
+            //TODO: CHECK if profile is valid.
+            Profiles[profileName] = profile;
         }
 
         #endregion

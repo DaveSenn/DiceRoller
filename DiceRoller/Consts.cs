@@ -32,12 +32,17 @@ namespace DiceRoller
         /// <summary>
         ///     Switch to reset data.
         /// </summary>
-        public const String Reset = "reset";
+        public const String Restore = "restore";
 
         /// <summary>
         ///     Switch to get path to data.
         /// </summary>
         public const String Path = "path";
+
+        /// <summary>
+        ///     Switch to access profile data.
+        /// </summary>
+        public const String Profile = "profile";
 
         #endregion
 

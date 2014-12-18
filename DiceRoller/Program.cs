@@ -26,8 +26,7 @@ namespace DiceRoller
             }
             catch ( Exception ex )
             {
-                Console.Write( "Parsing failed:" );
-                Console.WriteLine( ex );
+                OutputHelper.PrintError( "Parsing failed:{0}{1}".F( Environment.NewLine, ex ) );
             }
         }
     }
@@ -67,41 +66,44 @@ namespace DiceRoller
             {
                 case Consts.Print:
                     //Print the current configuration
-                    Console.WriteLine( "Configuration: {0}{1}", Environment.NewLine, DiceRollerConfigurationManager.Configuration );
+                    OutputHelper.PrintMessage( "Configuration: {0}{1}".F( Environment.NewLine,
+                                                                          DiceRollerConfigurationManager.Configuration ) );
                     return;
                 case Consts.Path:
                     //Print location of configuration file
-                    Console.WriteLine( Consts.ConfigurationFilePath );
+                    OutputHelper.PrintMessage( Consts.ConfigurationFilePath );
                     return;
-                case Consts.Reset:
+                case Consts.Restore:
                     //Reset the settings
                     DiceRollerConfigurationManager.Configuration.RestoreDefault();
                     DiceRollerConfigurationManager.SaveConfiguration();
-                    Console.WriteLine( "Configuration reseted" );
+                    OutputHelper.PrintMessage( "Configuration reseted" );
+                    return;
+                case Consts.Profile:
+                    
                     return;
             }
 
-            //Check for get value
+            //Check for get or set value
             try
             {
                 switch ( args.Length )
                 {
                     case 1:
                         Console.WriteLine( DiceRollerConfigurationManager.Configuration.GetProperty( args[0] ) );
-                        break;
+                        return;
                     case 2:
                         DiceRollerConfigurationManager.Configuration.SetProperty( args[0], args[1] );
                         DiceRollerConfigurationManager.SaveConfiguration();
-                        break;
+                        return;
                 }
-                return;
             }
             catch
             {
-                Console.Error.WriteLine( "Invalid configuration property." );
+                OutputHelper.PrintError( "Invalid configuration property." );
                 return;
             }
-            Console.Error.WriteLine( "Invalid configuration arguments." );
+            OutputHelper.PrintError( "Invalid configuration arguments." );
         }
     }
 }
