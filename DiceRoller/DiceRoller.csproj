@@ -52,7 +52,8 @@
     <Compile Include="Configuration\DiceRollerConfiguration.cs" />
     <Compile Include="Configuration\DiceRollerConfigurationManager.cs" />
     <Compile Include="Consts.cs" />
-    <Compile Include="OutputHelper.cs" />
+    <Compile Include="IoC\Container.cs" />
+    <Compile Include="Output\OutputHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

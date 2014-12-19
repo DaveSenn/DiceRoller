@@ -19,6 +19,8 @@ namespace DiceRoller
         /// <param name="args">The start arguments.</param>
         public static void Main( String[] args )
         {
+            InitializeApplication();
+
             var parser = new ArgumentParser();
             try
             {
@@ -28,6 +30,14 @@ namespace DiceRoller
             {
                 OutputHelper.PrintError( "Parsing failed:{0}{1}".F( Environment.NewLine, ex ) );
             }
+        }
+
+        /// <summary>
+        /// Initialize the application.
+        /// </summary>
+        private static void InitializeApplication()
+        {
+            Container.ConfigurationManager = new DiceRollerConfigurationManager();
         }
     }
 
@@ -66,8 +76,8 @@ namespace DiceRoller
             {
                 case Consts.Print:
                     //Print the current configuration
-                    OutputHelper.PrintMessage( "Configuration: {0}{1}".F( Environment.NewLine,
-                                                                          DiceRollerConfigurationManager.Configuration ) );
+                    OutputHelper.PrintMessage("Configuration: {0}{1}".F(Environment.NewLine, Container.ConfigurationManager.Configuration));
+                    
                     return;
                 case Consts.Path:
                     //Print location of configuration file
@@ -75,9 +85,7 @@ namespace DiceRoller
                     return;
                 case Consts.Restore:
                     //Reset the settings
-                    DiceRollerConfigurationManager.Configuration.RestoreDefault();
-                    DiceRollerConfigurationManager.SaveConfiguration();
-                    OutputHelper.PrintMessage( "Configuration reseted" );
+                    Container.ConfigurationManager.RestoreDefault();
                     return;
                 case Consts.Profile:
                     
@@ -90,11 +98,10 @@ namespace DiceRoller
                 switch ( args.Length )
                 {
                     case 1:
-                        Console.WriteLine( DiceRollerConfigurationManager.Configuration.GetProperty( args[0] ) );
+                        Console.WriteLine(Container.ConfigurationManager.GetProperty(args[0]));
                         return;
                     case 2:
-                        DiceRollerConfigurationManager.Configuration.SetProperty( args[0], args[1] );
-                        DiceRollerConfigurationManager.SaveConfiguration();
+                        Container.ConfigurationManager.SetProperty(args[0], args[1]);
                         return;
                 }
             }

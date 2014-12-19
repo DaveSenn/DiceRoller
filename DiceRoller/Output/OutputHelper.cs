@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region Usings
+
+using System;
+
+#endregion
 
 namespace DiceRoller
 {
@@ -27,10 +31,9 @@ namespace DiceRoller
             lock ( SyncRoot )
             {
                 var color = Console.ForegroundColor;
-                Console.ForegroundColor = DiceRollerConfigurationManager.Configuration.ErrorColor;
+                Console.ForegroundColor = Container.ConfigurationManager.Configuration.ErrorColor;
 
                 Console.Error.WriteLine( errorMessage );
-
                 Console.ForegroundColor = color;
             }
         }
@@ -44,10 +47,9 @@ namespace DiceRoller
             lock ( SyncRoot )
             {
                 var color = Console.ForegroundColor;
-                Console.ForegroundColor = DiceRollerConfigurationManager.Configuration.ResultColor;
+                Console.ForegroundColor = Console.ForegroundColor = Container.ConfigurationManager.Configuration.ResultColor;
 
                 Console.WriteLine( resultMessage );
-
                 Console.ForegroundColor = color;
             }
         }
