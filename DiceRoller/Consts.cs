@@ -1,6 +1,8 @@
 ﻿#region Usings
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 #endregion
 
@@ -13,6 +15,9 @@ namespace DiceRoller
     {
         #region Paths
 
+        /// <summary>
+        ///     Path to the configuration file.
+        /// </summary>
         public static readonly String ConfigurationFilePath = "DiceRollerConfiguration.json";
 
         #endregion
@@ -20,29 +25,55 @@ namespace DiceRoller
         #region Switches
 
         /// <summary>
-        ///     Switch for accessing the configuration.
+        ///     Switches accepted for accessing configuration section.
         /// </summary>
-        public const String ConfigurationSwitch = "config";
+        public static readonly List<String> ConfigurationSwitches = new List<String>
+        {
+            "c",
+            "config",
+            "configuration"
+        };
 
         /// <summary>
-        ///     Switch for printing something to the standard output.
+        ///     Switches accepted for any printing/sowing action.
         /// </summary>
-        public const String Print = "print";
+        public static readonly List<String> PrintSwitches = new List<String>
+        {
+            "show",
+            "display",
+            "print",
+        };
 
         /// <summary>
-        ///     Switch to reset data.
+        ///     Switches accepted for any restore/reset action.
         /// </summary>
-        public const String Restore = "restore";
+        public static readonly List<String> RestoreSwitches = new List<String>
+        {
+            "r",
+            "reset",
+            "restore",
+        };
 
         /// <summary>
-        ///     Switch to get path to data.
+        ///     Switches accepted for accessing the configuration path.
         /// </summary>
-        public const String Path = "path";
+        public static readonly List<String> PathSwitches = new List<String>
+        {
+            "path",
+            "location",
+            "name",
+            "filename",
+        };
 
         /// <summary>
-        ///     Switch to access profile data.
+        ///     Switches accepted for accessing the profile section.
         /// </summary>
-        public const String Profile = "profile";
+        public static readonly List<String> ProfileSwitches = new List<String>
+        {
+            "p",
+            "profile",
+            "prof",
+        };
 
         #endregion
 
@@ -54,8 +85,9 @@ namespace DiceRoller
         static Consts()
         {
             //Get path to configuration file
-            ConfigurationFilePath = System.IO.Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ),
-                                                  ConfigurationFilePath );
+            ConfigurationFilePath = Path.Combine(
+                Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ),
+                ConfigurationFilePath );
         }
 
         #endregion

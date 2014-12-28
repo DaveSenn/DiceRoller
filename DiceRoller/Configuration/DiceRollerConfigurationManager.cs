@@ -87,7 +87,10 @@ namespace DiceRoller
                     return true;
 
                 var json = JsonConvert.SerializeObject( Configuration );
-                File.WriteAllText( Consts.ConfigurationFilePath, json );
+                lock ( _syncRoot )
+                {
+                    File.WriteAllText( Consts.ConfigurationFilePath, json );
+                }
                 return true;
             }
             catch ( Exception ex )
@@ -151,6 +154,7 @@ namespace DiceRoller
         /// <returns>Returns a value of true if the property was set successfully; otherwise false.</returns>
         public Boolean SetProperty( String propertyName, String value )
         {
+            //TODO: Improve 
             if ( propertyName.CompareOrdinalIgnoreCase( Configuration.GetName( x => x.ErrorColor ) ) )
             {
                 ConsoleColor color;
