@@ -1,7 +1,6 @@
 ﻿#region Usings
 
 using System;
-using System.Linq;
 using PortableExtensions;
 
 #endregion
@@ -26,9 +25,13 @@ namespace DiceRoller
                 //var parser = new ArgumentParser();
                 //parser.ParsArguments( args );
             }
-            catch ( Exception ex )
+            catch ( ArgumentParsingException ex )
             {
                 OutputHelper.PrintError( "Parsing failed:{0}{1}".F( Environment.NewLine, ex ) );
+            }
+            catch ( Exception ex )
+            {
+                OutputHelper.PrintError("Unexpected exception occurred :{0}{1}".F(Environment.NewLine, ex));
             }
         }
 
@@ -38,6 +41,24 @@ namespace DiceRoller
         private static void InitializeApplication()
         {
             Container.ConfigurationManager = new DiceRollerConfigurationManager();
+        }
+    }
+
+    /// <summary>
+    /// Root argument parser.
+    /// </summary>
+    public class RootParser
+    {
+        /// <summary>
+        /// First level argument parsing.
+        /// </summary>
+        /// <param name="args">The start arguments.</param>
+        public void Pars( String[] args )
+        {
+            var parser = new GenericParser
+            {
+                { Consts.HelpSwitches, x => Console.WriteLine( "Help" ) }
+            };
         }
     }
 }

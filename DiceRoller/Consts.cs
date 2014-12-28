@@ -75,6 +75,16 @@ namespace DiceRoller
             "prof",
         };
 
+        /// <summary>
+        ///     Switches accepted for accessing the help section.
+        /// </summary>
+        public static readonly List<String> HelpSwitches = new List<String>
+        {
+            "h",
+            "?",
+            "help",
+        };
+
         #endregion
 
         #region Constructor
