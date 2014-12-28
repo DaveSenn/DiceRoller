@@ -22,7 +22,7 @@ namespace DiceRoller
             {
                 GenericParser.DefaultAction,
                 { Consts.HelpSwitches, ( arg, remainingArgs ) => Console.WriteLine( "Help" ) },
-                { Consts.ConfigurationSwitches, ( arg, remainingArgs ) => Console.WriteLine( "Config" ) },
+                { Consts.ConfigurationSwitches, ( arg, remainingArgs ) => new ConfigParser().Pars( remainingArgs ) },
             };
 
             parser.Pars( args );

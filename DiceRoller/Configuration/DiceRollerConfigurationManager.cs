@@ -140,8 +140,16 @@ namespace DiceRoller
                 return null;
             }
 
-            var value = property.GetValue( this, null );
-            return value == null ? "<null>" : value.ToString();
+            var value = property.GetValue( Configuration, null );
+            return value == null
+                ? "<null>"
+                : ( value.GetType()
+                         .IsEnum || ( value.GetType()
+                                           .IsClass && value.GetType()
+                                                            .GetMethod( "ToString" )
+                                                            .DeclaringType != typeof (object) )
+                    ? value.ToString()
+                    : JsonConvert.SerializeObject( value ) );
         }
 
         /// <summary>

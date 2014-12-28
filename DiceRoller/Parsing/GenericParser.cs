@@ -67,13 +67,15 @@ namespace DiceRoller
         /// <exception cref="ArgumentParsingException">No arguments specified.</exception>
         /// <exception cref="NoDefaultException">No default action specified.</exception>
         /// <param name="args">The arguments to pars.</param>
-        public void Pars( String[] args )
+        /// <param name="requiresDefaultAction">Determines whether the parsing needs a default action, or not. Default is true.</param>
+        /// <returns>Returns a value of true if a match was found, otherwise false.</returns>
+        public Boolean Pars( String[] args, Boolean requiresDefaultAction = true )
         {
             if ( args.IsNull() || args.NotAny() )
                 throw new ArgumentParsingException( "No arguments specified." );
 
             //Check if a default action is specified.
-            if ( this.NotAny( x => x.IsDefault ) )
+            if ( requiresDefaultAction && this.NotAny( x => x.IsDefault ) )
                 throw new NoDefaultException( "No default action specified." );
 
             var currentArgument = args[0];
@@ -94,13 +96,20 @@ namespace DiceRoller
 
                 executeDefaultAction = false;
                 if ( BreakAfterFirstMatch )
-                    return;
+                    return true;
             }
 
+            //Check if default action should get invoked.
+            if ( !executeDefaultAction )
+                return true;
+
             //Execute default action
-            if ( executeDefaultAction )
+            if ( requiresDefaultAction )
                 this.First( x => x.IsDefault )
                     .Action( currentArgument, args );
+
+            //Parsing as failed, no match found.
+            return false;
         }
 
         /// <summary>

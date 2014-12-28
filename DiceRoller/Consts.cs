@@ -85,6 +85,36 @@ namespace DiceRoller
             "help",
         };
 
+
+        /// <summary>
+        ///     Switches accepted for any add action.
+        /// </summary>
+        public static readonly List<String> AddSwitches = new List<String>
+        {
+            "a",
+            "add",
+        };
+
+        /// <summary>
+        ///     Switches accepted for any remove action.
+        /// </summary>
+        public static readonly List<String> RemoveSwitches = new List<String>
+        {
+            "r",
+            "rm",
+            "remove",
+        };
+
+        /// <summary>
+        ///     Switches accepted for any edit action.
+        /// </summary>
+        public static readonly List<String> EditSwitches = new List<String>
+        {
+            "e",
+            "edit",
+            "alter",
+        };
+        
         #endregion
 
         #region Constructor

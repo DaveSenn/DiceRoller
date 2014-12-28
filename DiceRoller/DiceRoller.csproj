@@ -55,9 +55,11 @@
     <Compile Include="Consts.cs" />
     <Compile Include="IoC\Container.cs" />
     <Compile Include="Output\OutputHelper.cs" />
+    <Compile Include="Parsing\ConfigParser.cs" />
     <Compile Include="Parsing\NoDefaultException.cs" />
     <Compile Include="Parsing\ParsAction.cs" />
     <Compile Include="Parsing\GenericParser.cs" />
+    <Compile Include="Parsing\ProfileParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parsing\RootParser.cs" />
