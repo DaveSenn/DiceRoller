@@ -34,8 +34,13 @@ namespace DiceRoller
         /// <summary>
         ///     Gets or sets the action to execute.
         /// </summary>
+        /// <remarks>
+        ///     Parameters:
+        ///     1) The current switch.
+        ///     2) The remaining switches.
+        /// </remarks>
         /// <value>The action to execute.</value>
-        public Action<String> Action { get; set; }
+        public Action<String, String[]> Action { get; set; }
 
         #endregion
 
@@ -54,7 +59,7 @@ namespace DiceRoller
         /// </summary>
         /// <param name="isDefault">A value determining whether the action is the default action or not.</param>
         /// <param name="action">The action to execute.</param>
-        public ParsAction( Boolean isDefault, Action<String> action )
+        public ParsAction( Boolean isDefault, Action<String, String[]> action )
         {
             IsDefault = isDefault;
             Action = action;
@@ -65,7 +70,7 @@ namespace DiceRoller
         /// </summary>
         /// <param name="switches">The mapped switches.</param>
         /// <param name="action">The action to execute.</param>
-        public ParsAction( IEnumerable<String> switches, Action<String> action )
+        public ParsAction( IEnumerable<String> switches, Action<String, String[]> action )
         {
             IsDefault = false;
             Action = action;

@@ -23,6 +23,5 @@ namespace DiceRoller
         }
 
         #endregion
-
     }
 }

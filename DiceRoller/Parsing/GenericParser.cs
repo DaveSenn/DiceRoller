@@ -17,6 +17,12 @@ namespace DiceRoller
         #region Properties
 
         /// <summary>
+        ///     Default action for unknown values.
+        /// </summary>
+        public static readonly Action<String, String[]> DefaultAction =
+            ( arg, args ) => OutputHelper.PrintError( "No matching option found '{0}' + '{1}'".F( arg, args.StringJoin( " " ) ) );
+
+        /// <summary>
         ///     Gets or sets a value determining whether the parsing is case sensitive or not.
         /// </summary>
         /// <remarks>
@@ -58,26 +64,33 @@ namespace DiceRoller
         /// <summary>
         ///     Pars the given argument.
         /// </summary>
+        /// <exception cref="ArgumentParsingException">No arguments specified.</exception>
         /// <exception cref="NoDefaultException">No default action specified.</exception>
-        /// <param name="argument">The argument to pars.</param>
-        public void Pars( String argument )
+        /// <param name="args">The arguments to pars.</param>
+        public void Pars( String[] args )
         {
+            if ( args.IsNull() || args.NotAny() )
+                throw new ArgumentParsingException( "No arguments specified." );
+
             //Check if a default action is specified.
             if ( this.NotAny( x => x.IsDefault ) )
                 throw new NoDefaultException( "No default action specified." );
 
+            var currentArgument = args[0];
+            args = args.Skip( 1 )
+                       .ToArray();
             var executeDefaultAction = true;
 
             foreach ( var action in from action in this
                                     let match = CaseSensitive
-                                        ? action.Switches != null && action.Switches.Any( x => x == argument )
+                                        ? action.Switches != null && action.Switches.Any( x => x == currentArgument )
                                         : action.Switches != null
-                                          && action.Switches.Any( x => x.CompareOrdinalIgnoreCase( argument ) )
+                                          && action.Switches.Any( x => x.CompareOrdinalIgnoreCase( currentArgument ) )
                                     where match
                                     select action )
             {
                 action.Action.ThrowIfNull( () => action.Action );
-                action.Action( argument );
+                action.Action( currentArgument, args );
 
                 executeDefaultAction = false;
                 if ( BreakAfterFirstMatch )
@@ -87,7 +100,7 @@ namespace DiceRoller
             //Execute default action
             if ( executeDefaultAction )
                 this.First( x => x.IsDefault )
-                    .Action( argument );
+                    .Action( currentArgument, args );
         }
 
         /// <summary>
@@ -95,7 +108,7 @@ namespace DiceRoller
         /// </summary>
         /// <param name="switces">The accepted switches.</param>
         /// <param name="action">The action to execute.</param>
-        public void Add( IEnumerable<String> switces, Action<String> action )
+        public void Add( IEnumerable<String> switces, Action<String, String[]> action )
         {
             Add( new ParsAction( switces, action ) );
         }
@@ -104,7 +117,7 @@ namespace DiceRoller
         ///     Adds the given action as default action to the parser.
         /// </summary>
         /// <param name="action">The default action.</param>
-        public void Add( Action<String> action )
+        public void Add( Action<String, String[]> action )
         {
             Add( new ParsAction( true, action ) );
         }

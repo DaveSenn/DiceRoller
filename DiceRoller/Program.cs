@@ -22,16 +22,15 @@ namespace DiceRoller
 
             try
             {
-                //var parser = new ArgumentParser();
-                //parser.ParsArguments( args );
+                new RootParser().Pars( args );
             }
             catch ( ArgumentParsingException ex )
             {
-                OutputHelper.PrintError( "Parsing failed:{0}{1}".F( Environment.NewLine, ex ) );
+                OutputHelper.PrintError( "Parsing failed:{0}{1}".F( Environment.NewLine, ex.Message ) );
             }
             catch ( Exception ex )
             {
-                OutputHelper.PrintError("Unexpected exception occurred :{0}{1}".F(Environment.NewLine, ex));
+                OutputHelper.PrintError( "Unexpected exception occurred :{0}{1}".F( Environment.NewLine, ex ) );
             }
         }
 
@@ -41,24 +40,6 @@ namespace DiceRoller
         private static void InitializeApplication()
         {
             Container.ConfigurationManager = new DiceRollerConfigurationManager();
-        }
-    }
-
-    /// <summary>
-    /// Root argument parser.
-    /// </summary>
-    public class RootParser
-    {
-        /// <summary>
-        /// First level argument parsing.
-        /// </summary>
-        /// <param name="args">The start arguments.</param>
-        public void Pars( String[] args )
-        {
-            var parser = new GenericParser
-            {
-                { Consts.HelpSwitches, x => Console.WriteLine( "Help" ) }
-            };
         }
     }
 }

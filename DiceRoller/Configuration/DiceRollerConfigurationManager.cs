@@ -57,7 +57,6 @@ namespace DiceRoller
         private DiceRollerConfiguration LoadConfiguration()
         {
             if ( File.Exists( Consts.ConfigurationFilePath ) )
-            {
                 try
                 {
                     return
@@ -67,7 +66,6 @@ namespace DiceRoller
                 {
                     OutputHelper.PrintError( "Failed to read configuration:{0}{1}".F( Environment.NewLine, ex.Message ) );
                 }
-            }
 
             var configuration = new DiceRollerConfiguration();
             RestoreDefault( configuration );
