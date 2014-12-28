@@ -76,6 +76,15 @@ namespace DiceRoller
         };
 
         /// <summary>
+        ///     Switches accepted for any open action.
+        /// </summary>
+        public static readonly List<String> OpenSwitches = new List<String>
+        {
+            "open",
+            "start",
+        };
+
+        /// <summary>
         ///     Switches accepted for accessing the help section.
         /// </summary>
         public static readonly List<String> HelpSwitches = new List<String>

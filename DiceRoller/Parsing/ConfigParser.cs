@@ -1,6 +1,7 @@
 #region Usings
 
 using System;
+using System.Diagnostics;
 using PortableExtensions;
 
 #endregion
@@ -25,6 +26,7 @@ namespace DiceRoller
                 { Consts.PrintSwitches, ( arg, remainingArgs ) => PrintConfiguration() },
                 { Consts.PathSwitches, ( arg, remainingArgs ) => PrintConfigurationPath() },
                 { Consts.RestoreSwitches, ( arg, remainingArgs ) => RestoreConfiguration() },
+                { Consts.OpenSwitches, ( arg, remainingArgs ) => OpenConfigurationFile() },
                 { Consts.ProfileSwitches, ( arg, remainingArgs ) => new ProfileParser().Pars( remainingArgs ) },
             };
 
@@ -39,7 +41,9 @@ namespace DiceRoller
                     Console.WriteLine( Container.ConfigurationManager.GetProperty( args[0] ) );
                     return;
                 case 2:
-                    Container.ConfigurationManager.SetProperty( args[0], args[1] );
+                    var result = Container.ConfigurationManager.SetProperty( args[0], args[1] );
+                    if(result)
+                        OutputHelper.PrintMessage("Property '{0}' set to '{1}'".F(args[0], args[1]));
                     return;
                 default:
                     OutputHelper.PrintError( "Invalid switches, found no matching configuration section." );
@@ -67,6 +71,21 @@ namespace DiceRoller
         private void PrintConfigurationPath()
         {
             OutputHelper.PrintMessage( Consts.ConfigurationFilePath );
+        }
+
+        /// <summary>
+        ///     OPens the configuration file.
+        /// </summary>
+        private void OpenConfigurationFile()
+        {
+            try
+            {
+                Process.Start( Consts.ConfigurationFilePath );
+            }
+            catch ( Exception ex )
+            {
+                OutputHelper.PrintError( "Failed to open configuration file. Details:{0}{1}".F( Environment.NewLine, ex.Message ) );
+            }
         }
 
         /// <summary>
