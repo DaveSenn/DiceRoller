@@ -218,6 +218,36 @@ namespace DiceRoller.Lib.Test
         }
 
         [Test]
+        [ExpectedException(typeof(ParsRollException))]
+        public void MultipleMapOperators()
+        {
+            var target = new RollParser();
+            var actual = target.ParsRoll("d20+d4=d12b=d12");
+            Assert.AreEqual(1, actual.NumberOfRepetitions);
+
+            Assert.AreEqual(5, actual.Count);
+            var item = actual.First() as DiceRoll;
+
+            Assert.AreEqual(1, item.NumberOfRolls);
+            Assert.AreEqual(20, item.Dice.Sides);
+            Assert.AreEqual(RollModification.None, item.RollModifier.RollModification);
+
+            Assert.AreEqual(RollOperator.Plus, (actual[1] as Operator).OperatorType);
+
+            item = actual[2] as DiceRoll;
+            Assert.AreEqual(1, item.NumberOfRolls);
+            Assert.AreEqual(4, item.Dice.Sides);
+            Assert.AreEqual(RollModification.None, item.RollModifier.RollModification);
+
+            Assert.AreEqual(RollOperator.Map, (actual[3] as Operator).OperatorType);
+            item = actual[4] as DiceRoll;
+            Assert.AreEqual(1, item.NumberOfRolls);
+            Assert.AreEqual(12, item.Dice.Sides);
+            Assert.AreEqual(RollModification.Best, item.RollModifier.RollModification);
+            Assert.AreEqual(2, item.RollModifier.ModificationQuantifier);
+        }
+
+        [Test]
         public void ParsDiceMath3()
         {
             var target = new RollParser();

@@ -94,6 +94,12 @@ namespace DiceRoller.Lib
                                        .Type == RollPartType.Operator )
                 throw new ParsRollException( "Last group can not be an operator.", roll );
 
+            if ( result
+                .Where( x => x.Type == RollPartType.Operator )
+                .Select( x => x as IOperator )
+                .Count( x => x.OperatorType == RollOperator.Map ) > 1 )
+                throw new ParsRollException( "Roll can only contain one map operator.", roll );
+
             return result;
         }
 
