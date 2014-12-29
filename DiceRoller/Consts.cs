@@ -94,7 +94,6 @@ namespace DiceRoller
             "help",
         };
 
-
         /// <summary>
         ///     Switches accepted for any add action.
         /// </summary>
@@ -123,7 +122,7 @@ namespace DiceRoller
             "edit",
             "alter",
         };
-        
+
         #endregion
 
         #region Constructor

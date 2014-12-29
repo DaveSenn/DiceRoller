@@ -83,6 +83,10 @@ namespace DiceRoller
                        .ToArray();
             var executeDefaultAction = true;
 
+            foreach ( var action in this )
+            {
+            }
+
             foreach ( var action in from action in this
                                     let match = CaseSensitive
                                         ? action.Switches != null && action.Switches.Any( x => x == currentArgument )

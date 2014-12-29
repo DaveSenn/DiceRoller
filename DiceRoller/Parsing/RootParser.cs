@@ -20,12 +20,17 @@ namespace DiceRoller
         {
             var parser = new GenericParser
             {
-                GenericParser.DefaultAction,
                 { Consts.HelpSwitches, ( arg, remainingArgs ) => Console.WriteLine( "Help" ) },
                 { Consts.ConfigurationSwitches, ( arg, remainingArgs ) => new ConfigParser().Pars( remainingArgs ) },
             };
 
-            parser.Pars( args );
+            var result = parser.Pars( args, false );
+            if ( result )
+                return;
+
+            //TODO: Pars roll
+
+            //TODO: print default error message if roll failed.
         }
     }
 }

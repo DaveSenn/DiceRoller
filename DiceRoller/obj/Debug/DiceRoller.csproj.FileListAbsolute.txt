@@ -18,3 +18,5 @@ C:\_Projects\DiceRoller\DiceRoller\bin\Debug\PortableExtensions.xml
 C:\_Projects\DiceRoller\DiceRoller\obj\Debug\DiceRoller.csprojResolveAssemblyReference.cache
 C:\_Projects\DiceRoller\DiceRoller\obj\Debug\dr.exe
 C:\_Projects\DiceRoller\DiceRoller\obj\Debug\dr.pdb
+C:\_Projects\DiceRoller\DiceRoller\bin\Debug\DiceRoller.Lib.dll
+C:\_Projects\DiceRoller\DiceRoller\bin\Debug\DiceRoller.Lib.pdb

@@ -42,8 +42,8 @@ namespace DiceRoller
                     return;
                 case 2:
                     var result = Container.ConfigurationManager.SetProperty( args[0], args[1] );
-                    if(result)
-                        OutputHelper.PrintMessage("Property '{0}' set to '{1}'".F(args[0], args[1]));
+                    if ( result )
+                        OutputHelper.PrintMessage( "Property '{0}' set to '{1}'".F( args[0], args[1] ) );
                     return;
                 default:
                     OutputHelper.PrintError( "Invalid switches, found no matching configuration section." );

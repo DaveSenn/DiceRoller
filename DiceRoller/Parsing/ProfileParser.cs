@@ -86,21 +86,20 @@ namespace DiceRoller
                 OutputHelper.PrintMessage( "Profile '{0}' removed.".F( remainingArgs[0] ) );
         }
 
-
         /// <summary>
         ///     Adds the profile represented by the given arguments.
         /// </summary>
         /// <param name="remainingArgs">The arguments.</param>
-        private void EditProfile(String[] remainingArgs)
+        private void EditProfile( String[] remainingArgs )
         {
-            if (remainingArgs.Length != 2)
+            if ( remainingArgs.Length != 2 )
             {
-                OutputHelper.PrintError("Invalid argument length (2 arguments required: Profile-name and Profile).");
+                OutputHelper.PrintError( "Invalid argument length (2 arguments required: Profile-name and Profile)." );
                 return;
             }
 
-            if (Container.ConfigurationManager.EditProfile(remainingArgs[0], remainingArgs[1]))
-                OutputHelper.PrintMessage("Profile '{0}' edited, new value is '{1}'.".F(remainingArgs[0], remainingArgs[1]));
+            if ( Container.ConfigurationManager.EditProfile( remainingArgs[0], remainingArgs[1] ) )
+                OutputHelper.PrintMessage( "Profile '{0}' edited, new value is '{1}'.".F( remainingArgs[0], remainingArgs[1] ) );
         }
 
         #endregion
