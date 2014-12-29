@@ -34,13 +34,6 @@ namespace DiceRoller.Lib.Test
         }
 
         [Test]
-        public void TypeTest()
-        {
-            var target = new DiceRoll();
-            Assert.AreEqual(RollPartType.ValueGroup, target.Type);
-        }
-
-        [Test]
         public void GetLogTest()
         {
             var target = new DiceRoll
@@ -219,7 +212,14 @@ namespace DiceRoller.Lib.Test
 
             const String expected = "3d6b";
             var actual = target.ToString();
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual( expected, actual );
+        }
+
+        [Test]
+        public void TypeTest()
+        {
+            var target = new DiceRoll();
+            Assert.AreEqual( RollPartType.ValueGroup, target.Type );
         }
     }
 }

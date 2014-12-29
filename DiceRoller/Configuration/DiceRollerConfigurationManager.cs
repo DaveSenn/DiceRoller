@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using DiceRoller.Lib;
 using Newtonsoft.Json;
 using PortableExtensions;
 
@@ -229,13 +230,21 @@ namespace DiceRoller
         /// <returns>Returns a value of true if the profile was added successfully; otherwise false.</returns>
         public Boolean AddProfile( String profileName, String profile )
         {
+            //Check if profile already exists
             if ( Configuration.Profiles.ContainsKey( profileName ) )
             {
                 OutputHelper.PrintError( "Profile with name '{0}' already exists.".F( profileName ) );
                 return false;
             }
 
-            //TODO: CHECK if profile is valid.
+            //Validate profile
+            Roll outVlaue;
+            if ( !Container.RollParser.TryParsRoll( profile, out outVlaue ) )
+            {
+                OutputHelper.PrintError( "Profile '{0}' has an invalid syntax.".F( profile ) );
+                return false;
+            }
+
             Configuration.Profiles.Add( profileName, profile );
             return SaveConfiguration();
         }
@@ -255,7 +264,14 @@ namespace DiceRoller
                 return false;
             }
 
-            //TODO: CHECK if profile is valid.
+            //Validate profile
+            Roll outVlaue;
+            if ( !Container.RollParser.TryParsRoll( profile, out outVlaue ) )
+            {
+                OutputHelper.PrintError( "Profile '{0}' has an invalid syntax.".F( profile ) );
+                return false;
+            }
+
             Configuration.Profiles[profileName] = profile;
             return SaveConfiguration();
         }

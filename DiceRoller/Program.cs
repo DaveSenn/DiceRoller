@@ -1,6 +1,7 @@
 ﻿#region Usings
 
 using System;
+using DiceRoller.Lib;
 using PortableExtensions;
 
 #endregion
@@ -40,6 +41,8 @@ namespace DiceRoller
         private static void InitializeApplication()
         {
             Container.ConfigurationManager = new DiceRollerConfigurationManager();
+            Container.RollParser = new RollParser();
+
         }
     }
 }

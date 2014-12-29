@@ -81,6 +81,179 @@ namespace DiceRoller.Lib.Test
         }
 
         [Test]
+        public void ParsComplexDice()
+        {
+            var target = new RollParser();
+            var actual = target.ParsRoll( "2d4b10" );
+            Assert.AreEqual( 1, actual.NumberOfRepetitions );
+
+            Assert.AreEqual( 1, actual.Count );
+            var item = actual.First() as DiceRoll;
+
+            Assert.AreEqual( 2, item.NumberOfRolls );
+            Assert.AreEqual( 4, item.Dice.Sides );
+            Assert.AreEqual( RollModification.Best, item.RollModifier.RollModification );
+            Assert.AreEqual( 10, item.RollModifier.ModificationQuantifier );
+        }
+
+        [Test]
+        public void ParsComplexDice1()
+        {
+            var target = new RollParser();
+            var actual = target.ParsRoll( "2d4B" );
+            Assert.AreEqual( 1, actual.NumberOfRepetitions );
+
+            Assert.AreEqual( 1, actual.Count );
+            var item = actual.First() as DiceRoll;
+
+            Assert.AreEqual( 2, item.NumberOfRolls );
+            Assert.AreEqual( 4, item.Dice.Sides );
+            Assert.AreEqual( RollModification.Best, item.RollModifier.RollModification );
+            Assert.AreEqual( 2, item.RollModifier.ModificationQuantifier );
+        }
+
+        [Test]
+        public void ParsComplexDice2()
+        {
+            var target = new RollParser();
+            var actual = target.ParsRoll( "2d4w10" );
+            Assert.AreEqual( 1, actual.NumberOfRepetitions );
+
+            Assert.AreEqual( 1, actual.Count );
+            var item = actual.First() as DiceRoll;
+
+            Assert.AreEqual( 2, item.NumberOfRolls );
+            Assert.AreEqual( 4, item.Dice.Sides );
+            Assert.AreEqual( RollModification.Worst, item.RollModifier.RollModification );
+            Assert.AreEqual( 10, item.RollModifier.ModificationQuantifier );
+        }
+
+        [Test]
+        public void ParsComplexDice3()
+        {
+            var target = new RollParser();
+            var actual = target.ParsRoll( "2d4W" );
+            Assert.AreEqual( 1, actual.NumberOfRepetitions );
+
+            Assert.AreEqual( 1, actual.Count );
+            var item = actual.First() as DiceRoll;
+
+            Assert.AreEqual( 2, item.NumberOfRolls );
+            Assert.AreEqual( 4, item.Dice.Sides );
+            Assert.AreEqual( RollModification.Worst, item.RollModifier.RollModification );
+            Assert.AreEqual( 2, item.RollModifier.ModificationQuantifier );
+        }
+
+        [Test]
+        public void ParsDiceMath()
+        {
+            var target = new RollParser();
+            var actual = target.ParsRoll( "1d20+1d4" );
+            Assert.AreEqual( 1, actual.NumberOfRepetitions );
+
+            Assert.AreEqual( 3, actual.Count );
+            var item = actual.First() as DiceRoll;
+
+            Assert.AreEqual( 1, item.NumberOfRolls );
+            Assert.AreEqual( 20, item.Dice.Sides );
+            Assert.AreEqual( RollModification.None, item.RollModifier.RollModification );
+
+            Assert.AreEqual( RollOperator.Plus, ( actual[1] as Operator ).OperatorType );
+
+            item = actual[2] as DiceRoll;
+            Assert.AreEqual( 1, item.NumberOfRolls );
+            Assert.AreEqual( 4, item.Dice.Sides );
+            Assert.AreEqual( RollModification.None, item.RollModifier.RollModification );
+        }
+
+        [Test]
+        public void ParsDiceMath1()
+        {
+            var target = new RollParser();
+            var actual = target.ParsRoll( "d20+d4" );
+            Assert.AreEqual( 1, actual.NumberOfRepetitions );
+
+            Assert.AreEqual( 3, actual.Count );
+            var item = actual.First() as DiceRoll;
+
+            Assert.AreEqual( 1, item.NumberOfRolls );
+            Assert.AreEqual( 20, item.Dice.Sides );
+            Assert.AreEqual( RollModification.None, item.RollModifier.RollModification );
+
+            Assert.AreEqual( RollOperator.Plus, ( actual[1] as Operator ).OperatorType );
+
+            item = actual[2] as DiceRoll;
+            Assert.AreEqual( 1, item.NumberOfRolls );
+            Assert.AreEqual( 4, item.Dice.Sides );
+            Assert.AreEqual( RollModification.None, item.RollModifier.RollModification );
+        }
+
+        [Test]
+        public void ParsDiceMath2()
+        {
+            var target = new RollParser();
+            var actual = target.ParsRoll( "d20+d4=d12b" );
+            Assert.AreEqual( 1, actual.NumberOfRepetitions );
+
+            Assert.AreEqual( 5, actual.Count );
+            var item = actual.First() as DiceRoll;
+
+            Assert.AreEqual( 1, item.NumberOfRolls );
+            Assert.AreEqual( 20, item.Dice.Sides );
+            Assert.AreEqual( RollModification.None, item.RollModifier.RollModification );
+
+            Assert.AreEqual( RollOperator.Plus, ( actual[1] as Operator ).OperatorType );
+
+            item = actual[2] as DiceRoll;
+            Assert.AreEqual( 1, item.NumberOfRolls );
+            Assert.AreEqual( 4, item.Dice.Sides );
+            Assert.AreEqual( RollModification.None, item.RollModifier.RollModification );
+
+            Assert.AreEqual( RollOperator.Map, ( actual[3] as Operator ).OperatorType );
+            item = actual[4] as DiceRoll;
+            Assert.AreEqual( 1, item.NumberOfRolls );
+            Assert.AreEqual( 12, item.Dice.Sides );
+            Assert.AreEqual( RollModification.Best, item.RollModifier.RollModification );
+            Assert.AreEqual( 2, item.RollModifier.ModificationQuantifier );
+        }
+
+        [Test]
+        public void ParsDiceMath3()
+        {
+            var target = new RollParser();
+            var actual = target.ParsRoll( "3xd20b+6+2=d12b+2" );
+            Assert.AreEqual( 3, actual.NumberOfRepetitions );
+
+            Assert.AreEqual( 9, actual.Count );
+            var item = actual.First() as DiceRoll;
+
+            Assert.AreEqual( 1, item.NumberOfRolls );
+            Assert.AreEqual( 20, item.Dice.Sides );
+            Assert.AreEqual( RollModification.Best, item.RollModifier.RollModification );
+            Assert.AreEqual( 2, item.RollModifier.ModificationQuantifier );
+
+            Assert.AreEqual( RollOperator.Plus, ( actual[1] as Operator ).OperatorType );
+
+            Assert.AreEqual( 6, ( actual[2] as StaticValue ).Value );
+
+            Assert.AreEqual( RollOperator.Plus, ( actual[3] as Operator ).OperatorType );
+
+            Assert.AreEqual( 2, ( actual[4] as StaticValue ).Value );
+
+            Assert.AreEqual( RollOperator.Map, ( actual[5] as Operator ).OperatorType );
+
+            item = actual[6] as DiceRoll;
+            Assert.AreEqual( 1, item.NumberOfRolls );
+            Assert.AreEqual( 12, item.Dice.Sides );
+            Assert.AreEqual( RollModification.Best, item.RollModifier.RollModification );
+            Assert.AreEqual( 2, item.RollModifier.ModificationQuantifier );
+
+            Assert.AreEqual( RollOperator.Plus, ( actual[7] as Operator ).OperatorType );
+
+            Assert.AreEqual( 2, ( actual[8] as StaticValue ).Value );
+        }
+
+        [Test]
         public void ParsMultipleNumberGroups()
         {
             var target = new RollParser();
@@ -132,7 +305,7 @@ namespace DiceRoller.Lib.Test
         public void ParsSimpleMapping()
         {
             var target = new RollParser();
-            var actual = target.ParsRoll( "12>20" );
+            var actual = target.ParsRoll( "12=20" );
 
             Assert.AreEqual( 1, actual.NumberOfRepetitions );
             Assert.AreEqual( 3, actual.Count );
@@ -146,7 +319,7 @@ namespace DiceRoller.Lib.Test
         public void ParsSimpleMappingWithQuantifier()
         {
             var target = new RollParser();
-            var actual = target.ParsRoll( "3x12>20" );
+            var actual = target.ParsRoll( "3x12=20" );
 
             Assert.AreEqual( 3, actual.NumberOfRepetitions );
             Assert.AreEqual( 3, actual.Count );
@@ -160,7 +333,7 @@ namespace DiceRoller.Lib.Test
         public void ParsSimpleMappingWithQuantifier1()
         {
             var target = new RollParser();
-            var actual = target.ParsRoll( "3X12>20" );
+            var actual = target.ParsRoll( "3X12=20" );
 
             Assert.AreEqual( 3, actual.NumberOfRepetitions );
             Assert.AreEqual( 3, actual.Count );

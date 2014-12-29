@@ -45,7 +45,8 @@ namespace DiceRoller
         {
             if ( remainingArgs.NotAny() )
             {
-                OutputHelper.PrintError( "No profile name specified." );
+                Container.ConfigurationManager.Configuration.Profiles.ForEach(
+                    x => OutputHelper.PrintMessage( "{0}\t\t{1}".F( x.Key, x.Value ) ) );
                 return;
             }
 

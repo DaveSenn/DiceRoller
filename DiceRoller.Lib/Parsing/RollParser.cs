@@ -34,7 +34,7 @@ namespace DiceRoller.Lib
         /// <summary>
         ///     All allowed operators.
         /// </summary>
-        private readonly List<Char> _operators = new List<Char> { '+', '-', '*', '/', '>' };
+        private readonly List<Char> _operators = new List<Char> { '+', '-', '*', '/', '=' };
 
         /// <summary>
         ///     List of characters representing a quantifier.
@@ -95,6 +95,26 @@ namespace DiceRoller.Lib
                 throw new ParsRollException( "Last group can not be an operator.", roll );
 
             return result;
+        }
+
+        /// <summary>
+        ///     Tries to pars a the given roll.
+        /// </summary>
+        /// <param name="roll">The roll to pars.</param>
+        /// <param name="convertedRoll">The converted roll.</param>
+        /// <returns>Returns a value of true if the roll was parsed successfully, otherwise false. </returns>
+        public Boolean TryParsRoll( String roll, out Roll convertedRoll )
+        {
+            try
+            {
+                convertedRoll = ParsRoll( roll );
+                return true;
+            }
+            catch ( ParsRollException )
+            {
+                convertedRoll = null;
+                return false;
+            }
         }
 
         #endregion
@@ -344,7 +364,7 @@ namespace DiceRoller.Lib
                 case '/':
                     o.OperatorType = RollOperator.Divide;
                     break;
-                case '>':
+                case '=':
                     o.OperatorType = RollOperator.Map;
                     break;
                 default:
@@ -461,7 +481,7 @@ namespace DiceRoller.Lib
                 else
                     break;
 
-                remainingString = source.Substring( 1 );
+                remainingString = remainingString.Substring( 1 );
             }
 
             try

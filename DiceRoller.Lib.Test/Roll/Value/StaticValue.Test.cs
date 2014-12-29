@@ -46,7 +46,7 @@ namespace DiceRoller.Lib.Test
         public void TypeTest()
         {
             var target = new StaticValue();
-            Assert.AreEqual(RollPartType.ValueGroup, target.Type);
+            Assert.AreEqual( RollPartType.ValueGroup, target.Type );
         }
 
         [Test]
