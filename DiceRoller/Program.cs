@@ -42,7 +42,7 @@ namespace DiceRoller
         {
             Container.ConfigurationManager = new DiceRollerConfigurationManager();
             Container.RollParser = new RollParser();
-
+            Container.RollCalculator = new RollCalculator();
         }
     }
 }

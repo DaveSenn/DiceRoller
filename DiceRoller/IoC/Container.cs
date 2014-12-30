@@ -25,6 +25,12 @@ namespace DiceRoller
         /// <value>A <see cref="RollParser" />.</value>
         public static RollParser RollParser { get; set; }
 
+        /// <summary>
+        ///     Gets or sets a <see cref="RollCalculator" />.
+        /// </summary>
+        /// <value>A <see cref="RollCalculator" />.</value>
+        public static RollCalculator RollCalculator { get; set; }
+
         #endregion
     }
 }

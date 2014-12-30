@@ -32,6 +32,19 @@ namespace DiceRoller.Lib
             NumberOfRepetitions = 1;
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Roll" /> class
+        ///     that contains elements copied from the specified collection and has sufficient
+        ///     capacity to accommodate the number of elements copied.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">collection is null.</exception>
+        /// <param name="collection">The collection whose elements are copied to the new list.</param>
+        public Roll( IEnumerable<IRollPart> collection )
+            : base( collection )
+        {
+            NumberOfRepetitions = 1;
+        }
+
         #endregion
     }
 }

@@ -148,7 +148,7 @@ namespace DiceRoller.Lib
             sb.Append( "[" );
 
             //Check if roll had no modifiers.. if so use simple layout
-            if ( _rollResults.Count == 1 )
+            if ( RollModifier.RollModification == RollModification.None )
                 sb.Append( _rollResults[0].OrderBy( x => x )
                                           .StringJoin( ", " ) );
             else

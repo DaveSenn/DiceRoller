@@ -81,12 +81,12 @@ namespace DiceRoller.Lib
         ///     Gets the first operator of the specified type.
         /// </summary>
         /// <param name="roll">The roll containing the operators.</param>
-        /// <param name="op">The operator type to search for.</param>
+        /// <param name="operators">The operator types to search for.</param>
         /// <returns>Returns all matching elements.</returns>
-        public static IRollPart GetFirstMatchingOperator( this IEnumerable<IRollPart> roll, RollOperator op )
+        public static IRollPart GetFirstMatchingOperator(this IEnumerable<IRollPart> roll, IEnumerable<RollOperator> operators)
         {
             return roll
-                .FirstOrDefault( x => x.Type == RollPartType.Operator && ( x as IOperator ).OperatorType == op );
+                .FirstOrDefault( x => x.Type == RollPartType.Operator && ( x as IOperator ).OperatorType.IsIn( operators ) );
         }
     }
 }

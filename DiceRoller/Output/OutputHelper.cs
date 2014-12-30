@@ -1,6 +1,9 @@
 ﻿#region Usings
 
 using System;
+using System.Collections.Generic;
+using DiceRoller.Lib;
+using PortableExtensions;
 
 #endregion
 
@@ -50,6 +53,41 @@ namespace DiceRoller
                 Console.ForegroundColor = Console.ForegroundColor = Container.ConfigurationManager.Configuration.ResultColor;
 
                 Console.WriteLine( resultMessage );
+                Console.ForegroundColor = color;
+            }
+        }
+
+        /// <summary>
+        ///     Prints the given roll result.
+        /// </summary>
+        /// <param name="rollResult">The roll result to print.</param>
+        public static void PrintResult( IEnumerable<RollResult> rollResult )
+        {
+            lock ( SyncRoot )
+            {
+                var color = Console.ForegroundColor;
+                Console.ForegroundColor = Console.ForegroundColor = Container.ConfigurationManager.Configuration.ResultColor;
+
+                rollResult.ForEach( x =>
+                {
+                    switch ( x.Result.Type )
+                    {
+                        case ResultType.SingleValue:
+                            var singleValue = x.Result as SingleResult;
+                            Console.WriteLine( "{0}\t\t{1}", singleValue.Result, x.Log );
+                            break;
+
+                        case ResultType.Map:
+                            var mapValue = x.Result as MapResult;
+                            Console.WriteLine( "{0} => {1}\t\t{2}", mapValue.Left, mapValue.Right, x.Log );
+                            break;
+
+                        default:
+                            Console.WriteLine( "Invalid result type received" );
+                            break;
+                    }
+                } );
+
                 Console.ForegroundColor = color;
             }
         }

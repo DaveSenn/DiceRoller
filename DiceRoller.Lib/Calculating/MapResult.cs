@@ -27,7 +27,7 @@ namespace DiceRoller.Lib
         /// <value>The result type.</value>
         public ResultType Type
         {
-            get { return ResultType.SingleValue; }
+            get { return ResultType.Map; }
         }
 
         #endregion

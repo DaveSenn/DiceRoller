@@ -17,14 +17,21 @@ namespace DiceRoller.Lib
         #region Fields
 
         /// <summary>
-        ///     List containing the for basic operators, ordered by priority.
+        ///     List of low priority operators.
         /// </summary>
-        private readonly List<RollOperator> _operators = new List<RollOperator>
+        private readonly List<RollOperator> _lowPriorityOperators = new List<RollOperator>
+        {
+            RollOperator.Plus,
+            RollOperator.Minus
+        };
+
+        /// <summary>
+        ///     List of top priority operators.
+        /// </summary>
+        private readonly List<RollOperator> _topPriorityOperators = new List<RollOperator>
         {
             RollOperator.Times,
-            RollOperator.Divide,
-            RollOperator.Plus,
-            RollOperator.Minus,
+            RollOperator.Divide
         };
 
         #endregion
@@ -39,15 +46,24 @@ namespace DiceRoller.Lib
         public IEnumerable<RollResult> Calculate( Roll roll )
         {
             var result = new List<RollResult>();
+
+            //Repeat as specified
             for ( var i = 0; i < roll.NumberOfRepetitions; i++ )
             {
+                //Reset old results
+                var internalRoll = new Roll(roll);
+                ResetRoll(internalRoll);
+
                 var resultEntry = new RollResult
                 {
-                    Log = RollGroups( roll )
+                    Log = RollGroups( internalRoll )
                 };
-                _operators.ForEach( x => Calculate( roll, x ) );
 
-                resultEntry.Result = GetResult( roll );
+                //calculate first * and / then + -
+                Calculate( internalRoll, _topPriorityOperators );
+                Calculate( internalRoll, _lowPriorityOperators );
+
+                resultEntry.Result = GetResult( internalRoll );
                 result.Add( resultEntry );
             }
 
@@ -57,6 +73,24 @@ namespace DiceRoller.Lib
         #endregion
 
         #region Private Members
+
+        /// <summary>
+        ///     Resets the roll.
+        /// </summary>
+        /// <exception cref="RollCalculationException">Calculation failed.</exception>
+        /// <param name="roll">The roll.</param>
+        private void ResetRoll( List<IRollPart> roll )
+        {
+            roll.ForEach( x =>
+            {
+                if ( x.Type != RollPartType.ValueGroup )
+                    return;
+                var valueGroup = x as IValueGroup;
+                if ( valueGroup == null )
+                    throw new RollCalculationException( "Invalid type specified for group '{0}'".F( x.ToString() ) );
+                valueGroup.ResetValue();
+            } );
+        }
 
         /// <summary>
         ///     Gets the result from the given roll.
@@ -108,7 +142,7 @@ namespace DiceRoller.Lib
             return new MapResult
             {
                 Left = left.GetValue(),
-                Right = right.GetValue()
+                Right = right.GetValue(),
             };
         }
 
@@ -152,14 +186,14 @@ namespace DiceRoller.Lib
         }
 
         /// <summary>
-        ///     Calculates all groups joined by the given operator.
+        ///     Calculates all groups joined by the given operators.
         /// </summary>
         /// <exception cref="RollCalculationException">Calculation failed.</exception>
         /// <param name="roll">The roll.</param>
-        /// <param name="op">The operator.</param>
-        private static void Calculate( IList<IRollPart> roll, RollOperator op )
+        /// <param name="operators">The operators.</param>
+        private static void Calculate( IList<IRollPart> roll, IEnumerable<RollOperator> operators )
         {
-            var operatorPart = roll.GetFirstMatchingOperator( op ) as IOperator;
+            var operatorPart = roll.GetFirstMatchingOperator( operators ) as IOperator;
             while ( operatorPart != null )
             {
                 //Get operator, left and right group.
@@ -190,7 +224,7 @@ namespace DiceRoller.Lib
                 roll.Insert( leftIndex, new StaticValue { Value = resultValue } );
 
                 //Get next operator of same type
-                operatorPart = roll.GetFirstMatchingOperator( op ) as IOperator;
+                operatorPart = roll.GetFirstMatchingOperator( operators ) as IOperator;
             }
         }
 
