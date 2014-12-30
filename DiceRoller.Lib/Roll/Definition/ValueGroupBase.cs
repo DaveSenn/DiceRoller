@@ -39,7 +39,7 @@ namespace DiceRoller.Lib
         public abstract String GetLog();
 
         /// <summary>
-        /// Resets the cached value.
+        ///     Resets the cached value.
         /// </summary>
         public abstract void ResetValue();
 

@@ -83,7 +83,7 @@ namespace DiceRoller.Lib
         /// <param name="roll">The roll containing the operators.</param>
         /// <param name="operators">The operator types to search for.</param>
         /// <returns>Returns all matching elements.</returns>
-        public static IRollPart GetFirstMatchingOperator(this IEnumerable<IRollPart> roll, IEnumerable<RollOperator> operators)
+        public static IRollPart GetFirstMatchingOperator( this IEnumerable<IRollPart> roll, IEnumerable<RollOperator> operators )
         {
             return roll
                 .FirstOrDefault( x => x.Type == RollPartType.Operator && ( x as IOperator ).OperatorType.IsIn( operators ) );

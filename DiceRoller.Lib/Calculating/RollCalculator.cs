@@ -51,8 +51,8 @@ namespace DiceRoller.Lib
             for ( var i = 0; i < roll.NumberOfRepetitions; i++ )
             {
                 //Reset old results
-                var internalRoll = new Roll(roll);
-                ResetRoll(internalRoll);
+                var internalRoll = new Roll( roll );
+                ResetRoll( internalRoll );
 
                 var resultEntry = new RollResult
                 {

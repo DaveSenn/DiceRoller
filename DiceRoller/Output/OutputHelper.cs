@@ -74,12 +74,12 @@ namespace DiceRoller
                     {
                         case ResultType.SingleValue:
                             var singleValue = x.Result as SingleResult;
-                            Console.WriteLine( "{0}\t\t{1}", singleValue.Result, x.Log );
+                            Console.WriteLine( "{0,3}\t\t{1}", singleValue.Result, x.Log );
                             break;
 
                         case ResultType.Map:
                             var mapValue = x.Result as MapResult;
-                            Console.WriteLine( "{0} => {1}\t\t{2}", mapValue.Left, mapValue.Right, x.Log );
+                            Console.WriteLine( "{0,3} => {1,3}\t\t{2}", mapValue.Left, mapValue.Right, x.Log );
                             break;
 
                         default:

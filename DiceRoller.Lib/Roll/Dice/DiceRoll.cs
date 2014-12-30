@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using DiceRoller.Lib.Lib;
@@ -149,8 +150,12 @@ namespace DiceRoller.Lib
 
             //Check if roll had no modifiers.. if so use simple layout
             if ( RollModifier.RollModification == RollModification.None )
+
                 sb.Append( _rollResults[0].OrderBy( x => x )
+                                          .Select( x => x.ToString( CultureInfo.InvariantCulture )
+                                                         .PadLeft( 2 ) )
                                           .StringJoin( ", " ) );
+
             else
                 //Use group layout
                 _rollResults.ForEach( x =>
@@ -162,6 +167,8 @@ namespace DiceRoller.Lib
                     //Add group
                     sb.Append( "(" );
                     sb.Append( x.OrderBy( y => y )
+                                .Select( y => y.ToString( CultureInfo.InvariantCulture )
+                                               .PadLeft( 2 ) )
                                 .StringJoin( ", " ) );
                     sb.Append( ")" );
                 } );
