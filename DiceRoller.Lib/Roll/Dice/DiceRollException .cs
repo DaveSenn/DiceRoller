@@ -1,4 +1,4 @@
-#region Usings
+﻿#region Usings
 
 using System;
 
@@ -28,8 +28,8 @@ namespace DiceRoller.Lib
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
         /// <param name="roll">The failed roll.</param>
-        public DiceRollException( String message, DiceRoll roll )
-            : base( message )
+        public DiceRollException(String message, DiceRoll roll)
+            : base(message)
         {
             Roll = roll;
         }

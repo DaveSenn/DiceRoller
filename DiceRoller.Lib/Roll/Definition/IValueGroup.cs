@@ -14,6 +14,9 @@ namespace DiceRoller.Lib
         /// <summary>
         ///     Gets the result of the value group.
         /// </summary>
+        /// <remarks>
+        /// Value gets cached, to get a new value call <see cref="ResetValue"/>.
+        /// </remarks>
         /// <returns>Returns the value.</returns>
         Int32 GetValue();
 
@@ -22,5 +25,10 @@ namespace DiceRoller.Lib
         /// </summary>
         /// <returns>Returns the log.</returns>
         String GetLog();
+
+        /// <summary>
+        /// Resets the cached value.
+        /// </summary>
+        void ResetValue();
     }
 }

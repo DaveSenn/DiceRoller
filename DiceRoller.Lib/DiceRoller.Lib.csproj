@@ -42,9 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculating\IResult.cs" />
+    <Compile Include="Calculating\MapResult.cs" />
+    <Compile Include="Calculating\ResultType.cs" />
+    <Compile Include="Calculating\RollResult.cs" />
+    <Compile Include="Calculating\SingleResult.cs" />
+    <Compile Include="Ex.cs" />
+    <Compile Include="Calculating\RollCalculator.cs" />
     <Compile Include="Parsing\RollParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roll\Definition\IRollPart.cs" />
+    <Compile Include="Roll\Dice\DiceRollException .cs" />
     <Compile Include="Roll\Operator\IOperator.cs" />
     <Compile Include="Roll\Operator\Operator.cs" />
     <Compile Include="Roll\Roll\ParsRollException.cs" />
@@ -54,7 +62,7 @@
     <Compile Include="Roll\Definition\ValueGroupBase.cs" />
     <Compile Include="Roll\Dice\Dice.cs" />
     <Compile Include="Roll\Dice\DiceRoll.cs" />
-    <Compile Include="Roll\Dice\DiceRollException.cs" />
+    <Compile Include="Calculating\RollCalculationException.cs" />
     <Compile Include="Roll\Definition\IValueGroup.cs" />
     <Compile Include="Roll\Dice\RollModification.cs" />
     <Compile Include="Roll\Dice\RollModifier.cs" />

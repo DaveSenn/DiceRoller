@@ -55,6 +55,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Calculating\RollCalculator.Test.cs" />
     <Compile Include="Parsing\RollParser.Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Roll\Dice\Dice.Test.cs" />
@@ -73,6 +74,7 @@
       <Name>DiceRoller.Lib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

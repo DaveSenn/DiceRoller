@@ -38,7 +38,7 @@ namespace DiceRoller.Lib.Test
             Assert.AreEqual( "/", target.ToString() );
 
             target.OperatorType = RollOperator.Map;
-            Assert.AreEqual( "=>", target.ToString() );
+            Assert.AreEqual( "=", target.ToString() );
         }
 
         [Test]

@@ -42,6 +42,14 @@ namespace DiceRoller.Lib
             return Value.ToString( CultureInfo.InvariantCulture );
         }
 
+        /// <summary>
+        ///     Resets the cached value.
+        /// </summary>
+        public override void ResetValue()
+        {
+            //Static value does not need a reset.
+        }
+
         #endregion
 
         #region Overrides of Object

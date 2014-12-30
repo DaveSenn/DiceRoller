@@ -38,6 +38,11 @@ namespace DiceRoller.Lib
         /// <returns>Returns the log.</returns>
         public abstract String GetLog();
 
+        /// <summary>
+        /// Resets the cached value.
+        /// </summary>
+        public abstract void ResetValue();
+
         #endregion
     }
 }

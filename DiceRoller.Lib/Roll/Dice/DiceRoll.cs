@@ -28,6 +28,11 @@ namespace DiceRoller.Lib
         /// </summary>
         private readonly Object _syncRoot = new Object();
 
+        /// <summary>
+        ///     Cache for a calculated result.
+        /// </summary>
+        private Int32? _resultCache;
+
         #endregion
 
         #region Properties
@@ -74,8 +79,16 @@ namespace DiceRoller.Lib
         /// <returns>Returns the value.</returns>
         public override Int32 GetValue()
         {
+            //Get value from cache
+            if ( _resultCache.HasValue )
+                return _resultCache.Value;
+
             lock ( _syncRoot )
             {
+                //Get value from cache
+                if ( _resultCache.HasValue )
+                    return _resultCache.Value;
+
                 //Initialize for new roll
                 _rollResults.Clear();
                 var result = 0;
@@ -120,6 +133,7 @@ namespace DiceRoller.Lib
                                 this );
                     }
 
+                _resultCache = result;
                 return result;
             }
         }
@@ -154,6 +168,18 @@ namespace DiceRoller.Lib
 
             sb.Append( "]" );
             return sb.ToString();
+        }
+
+        /// <summary>
+        ///     Resets the cached value.
+        /// </summary>
+        public override void ResetValue()
+        {
+            lock ( _syncRoot )
+            {
+                _rollResults.Clear();
+                _resultCache = null;
+            }
         }
 
         #endregion

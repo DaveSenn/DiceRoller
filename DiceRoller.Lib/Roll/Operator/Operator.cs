@@ -44,21 +44,7 @@ namespace DiceRoller.Lib
         /// </returns>
         public override String ToString()
         {
-            switch ( OperatorType )
-            {
-                case RollOperator.Plus:
-                    return "+";
-                case RollOperator.Minus:
-                    return "-";
-                case RollOperator.Times:
-                    return "*";
-                case RollOperator.Divide:
-                    return "/";
-                case RollOperator.Map:
-                    return "=>";
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return this.GetStringOperator();
         }
 
         #endregion
