@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using DiceRoller.Extensions;
 using DiceRoller.Lib.Lib;
-using PortableExtensions;
 
 #endregion
 
@@ -154,7 +154,7 @@ namespace DiceRoller.Lib
                 sb.Append( _rollResults[0].OrderBy( x => x )
                                           .Select( x => x.ToString( CultureInfo.InvariantCulture )
                                                          .PadLeft( 2 ) )
-                                          .StringJoin( ", " ) );
+                                          .StringJoin( "," ) );
 
             else
                 //Use group layout
@@ -169,7 +169,7 @@ namespace DiceRoller.Lib
                     sb.Append( x.OrderBy( y => y )
                                 .Select( y => y.ToString( CultureInfo.InvariantCulture )
                                                .PadLeft( 2 ) )
-                                .StringJoin( ", " ) );
+                                .StringJoin( "," ) );
                     sb.Append( ")" );
                 } );
 

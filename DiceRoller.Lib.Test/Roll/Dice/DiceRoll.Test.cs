@@ -1,9 +1,9 @@
 ﻿#region Usings
 
 using System;
+using DiceRoller.Extensions;
 using DiceRoller.Lib.Lib;
 using NUnit.Framework;
-using PortableExtensions;
 
 #endregion
 

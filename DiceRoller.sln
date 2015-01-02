@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceRoller.Lib", "DiceRolle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceRoller.Lib.Test", "DiceRoller.Lib.Test\DiceRoller.Lib.Test.csproj", "{310EEE34-4C3B-4EBD-8E8E-11543B566FB6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceRoller.Extensions", "DiceRoller.Extensions\DiceRoller.Extensions.csproj", "{6C165641-172B-4E15-B026-4FE06E631C19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PortableExtensions", "PortableExtensions", "{3AB1A9A2-7CF1-471F-BF1C-EC0285F18286}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{BB364CBE-61E9-4DB4-99D6-8823E3FDABBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +33,16 @@ Global
 		{310EEE34-4C3B-4EBD-8E8E-11543B566FB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{310EEE34-4C3B-4EBD-8E8E-11543B566FB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{310EEE34-4C3B-4EBD-8E8E-11543B566FB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C165641-172B-4E15-B026-4FE06E631C19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C165641-172B-4E15-B026-4FE06E631C19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C165641-172B-4E15-B026-4FE06E631C19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C165641-172B-4E15-B026-4FE06E631C19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{310EEE34-4C3B-4EBD-8E8E-11543B566FB6} = {BB364CBE-61E9-4DB4-99D6-8823E3FDABBB}
+		{6C165641-172B-4E15-B026-4FE06E631C19} = {3AB1A9A2-7CF1-471F-BF1C-EC0285F18286}
 	EndGlobalSection
 EndGlobal

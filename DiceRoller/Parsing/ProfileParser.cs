@@ -1,7 +1,7 @@
 #region Usings
 
 using System;
-using PortableExtensions;
+using DiceRoller.Extensions;
 
 #endregion
 

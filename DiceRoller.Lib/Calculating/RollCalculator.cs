@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using PortableExtensions;
+using DiceRoller.Extensions;
 
 #endregion
 

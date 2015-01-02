@@ -41,9 +41,6 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="PortableExtensions">
-      <HintPath>..\packages\PortableExtensions.1.0.19.0\lib\portable-net45+wp8+win8\PortableExtensions.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -69,6 +66,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DiceRoller.Extensions\DiceRoller.Extensions.csproj">
+      <Project>{6c165641-172b-4e15-b026-4fe06e631c19}</Project>
+      <Name>DiceRoller.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DiceRoller.Lib\DiceRoller.Lib.csproj">
       <Project>{b54806a7-0a01-4186-ab65-dde543e19f5c}</Project>
       <Name>DiceRoller.Lib</Name>

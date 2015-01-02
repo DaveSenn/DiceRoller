@@ -1,8 +1,8 @@
 ﻿#region Usings
 
 using System.Globalization;
+using DiceRoller.Extensions;
 using NUnit.Framework;
-using PortableExtensions;
 
 #endregion
 

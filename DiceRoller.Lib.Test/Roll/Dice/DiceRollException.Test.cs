@@ -1,7 +1,7 @@
 ﻿#region Usings
 
+using DiceRoller.Extensions;
 using NUnit.Framework;
-using PortableExtensions;
 
 #endregion
 

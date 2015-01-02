@@ -2,7 +2,7 @@
 
 using System;
 using System.Diagnostics;
-using PortableExtensions;
+using DiceRoller.Extensions;
 
 #endregion
 

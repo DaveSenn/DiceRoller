@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using DiceRoller.Extensions;
 using DiceRoller.Lib;
 using Newtonsoft.Json;
-using PortableExtensions;
 
 #endregion
 

@@ -2,8 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using DiceRoller.Extensions;
 using DiceRoller.Lib;
-using PortableExtensions;
 
 #endregion
 
